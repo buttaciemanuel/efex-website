@@ -47,9 +47,9 @@ export default function MainContent({ translation }: { translation: TFunction })
         });
     };
 
-    // useEffect(() => {
-    //     getRates();
-    // }, []);
+    useEffect(() => {
+        getRates();
+    }, []);
 
     const timeoutRoutine: TimerHandler = () => {
         if (serviceItem === serviceOptions.length - 1) {
