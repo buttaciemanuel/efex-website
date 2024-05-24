@@ -1,6 +1,6 @@
 # EFEX website
 
-> Note: the current implementation only accounts for desktop screen rendering. The mobile version will be completed subsequently.
+> **Note**: now the design should be responsive to screen size, and it should adapt to mobile screens as well.
 
 ## Install the dependencies
 
