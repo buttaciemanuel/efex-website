@@ -229,7 +229,7 @@ export default function MainContent({ translation }: { translation: TFunction })
                                             boxShadow: 'none',
                                         }
                                     }}>
-                                        Swap
+                                        {translation('swap')}
                                     </Button>
                                 </Grid>
                                 <Grid>
@@ -456,7 +456,7 @@ export default function MainContent({ translation }: { translation: TFunction })
                                             boxShadow: 'none',
                                         }
                                     }}>
-                                        Swap
+                                        {translation('swap')}
                                     </Button>
                                 </Grid>
                             <Grid>

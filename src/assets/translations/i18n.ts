@@ -27,6 +27,7 @@ const resources = {
       fintech: 'Fintech',
       youReceive: 'You receive',
       youSend: 'You send',
+      swap: 'Swap'
     },
   },
   es: {
@@ -51,6 +52,7 @@ const resources = {
       fintech: 'Fintech',
       youReceive: 'Tu contacto recibe',
       youSend: 'Tu envías',
+      swap: 'Cambia'
     },
   },
 };
