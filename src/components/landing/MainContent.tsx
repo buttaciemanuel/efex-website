@@ -2,8 +2,9 @@ import React from 'react';
 import MediaQuery from 'react-responsive';
 import { TFunction } from 'i18next';
 import { useState, useEffect } from 'react';
-import { Box, Button, Grid, Typography, Card, TextField, InputAdornment, MenuItem, Icon } from '@mui/material';
+import { Box, Button, Grid, Typography, Card, TextField, InputAdornment, MenuItem, Icon, IconButton } from '@mui/material';
 
+import SwapVertIcon from '@mui/icons-material/SwapVert';
 import { US, MX, CO } from 'country-flag-icons/react/3x2'
 
 const serviceOptions = ['logistics', 'ecommerce', 'exports', 'imports', 'fintech'];
@@ -54,9 +55,9 @@ export default function MainContent({ translation }: { translation: TFunction })
         });
     };
 
-    // useEffect(() => {
-    //     getRates();
-    // }, []);
+    useEffect(() => {
+        getRates();
+    }, []);
 
     const timeoutRoutine: TimerHandler = () => {
         if (serviceItem === serviceOptions.length - 1) {
@@ -75,6 +76,17 @@ export default function MainContent({ translation }: { translation: TFunction })
     const [sendValue, setSendValue] = useState("0");
     const [receiveValue, setReceiveValue] = useState("0");
     const [rates, setRates] = useState(exchangeRatesInitialization);
+
+    const swapCurrencies = () => {
+        const sendCurrencyCopy = sendCurrency;
+        const sendValueCopy = sendValue;
+
+        setSendCurrency(receiveCurrency);
+        setSendValue(receiveValue);
+
+        setReceiveCurrency(sendCurrencyCopy);
+        setReceiveValue(sendValueCopy);
+    }
 
     return <>
         <MediaQuery minWidth={1224}>
@@ -139,7 +151,7 @@ export default function MainContent({ translation }: { translation: TFunction })
                                             label="You send"
                                             variant="outlined"
                                             type="number"
-                                            InputProps={{ 
+                                            InputProps={{
                                                 style: { borderRadius: '5pt' },
                                                 startAdornment: <InputAdornment position="start"><Typography color='black'>$</Typography></InputAdornment>
                                             }}
@@ -194,6 +206,7 @@ export default function MainContent({ translation }: { translation: TFunction })
                                                 setSendValue("0");
                                                 setReceiveValue("0");
                                             }}
+                                            value={sendCurrency}
                                         >
                                             {currenciesOptions.map((option) => (
                                                 <MenuItem disabled={option.currency === sendCurrency || option.currency === receiveCurrency} key={`send-option-${option.id}`} value={option.currency}>
@@ -208,7 +221,17 @@ export default function MainContent({ translation }: { translation: TFunction })
                                         </TextField>
                                     </Grid>
                                 </Grid>
-
+                                <Grid container direction='row' marginTop={1} marginBottom={2} justifyContent='center'>
+                                    <Button variant="contained" startIcon={<SwapVertIcon />} color='primary' onClick={swapCurrencies} sx={{
+                                        boxShadow: 'none',
+                                        borderRadius: '20px',
+                                        '&:hover': {
+                                            boxShadow: 'none',
+                                        }
+                                    }}>
+                                        Swap
+                                    </Button>
+                                </Grid>
                                 <Grid>
                                     <Grid item paddingBottom={1}>
                                         <Typography variant='body1' color='white'>{translation("youReceive")}</Typography>
@@ -219,7 +242,7 @@ export default function MainContent({ translation }: { translation: TFunction })
                                             label="You receive"
                                             variant="outlined"
                                             type="number"
-                                            InputProps={{ 
+                                            InputProps={{
                                                 style: { borderRadius: '5pt' },
                                                 startAdornment: <InputAdornment position="start"><Typography color='black'>$</Typography></InputAdornment>
                                             }}
@@ -272,6 +295,7 @@ export default function MainContent({ translation }: { translation: TFunction })
                                                 setSendValue("0");
                                                 setReceiveValue("0");
                                             }}
+                                            value={receiveCurrency}
                                         >
                                             {currenciesOptions.map((option) => (
                                                 <MenuItem disabled={option.currency === sendCurrency || option.currency === receiveCurrency} key={`receive-option-${option.id}`} value={option.currency}>
@@ -354,7 +378,7 @@ export default function MainContent({ translation }: { translation: TFunction })
                                         label="You send"
                                         variant="outlined"
                                         type="number"
-                                        InputProps={{ 
+                                        InputProps={{
                                             style: { borderRadius: '5pt' },
                                             startAdornment: <InputAdornment position="start"><Typography color='black'>$</Typography></InputAdornment>
                                         }}
@@ -409,6 +433,7 @@ export default function MainContent({ translation }: { translation: TFunction })
                                             setSendValue("0");
                                             setReceiveValue("0");
                                         }}
+                                        value={sendCurrency}
                                     >
                                         {currenciesOptions.map((option) => (
                                             <MenuItem disabled={option.currency === sendCurrency || option.currency === receiveCurrency} key={`send-option-${option.id}`} value={option.currency}>
@@ -423,6 +448,17 @@ export default function MainContent({ translation }: { translation: TFunction })
                                     </TextField>
                                 </Grid>
                             </Grid>
+                            <Grid container direction='row' marginTop={1} marginBottom={2} justifyContent='center'>
+                                    <Button size='small' variant="contained" startIcon={<SwapVertIcon />} color='primary' onClick={swapCurrencies} sx={{
+                                        boxShadow: 'none',
+                                        borderRadius: '20px',
+                                        '&:hover': {
+                                            boxShadow: 'none',
+                                        }
+                                    }}>
+                                        Swap
+                                    </Button>
+                                </Grid>
                             <Grid>
                                 <Grid item paddingBottom={1}>
                                     <Typography variant='body2' color='white'>{translation("youReceive")}</Typography>
@@ -434,7 +470,7 @@ export default function MainContent({ translation }: { translation: TFunction })
                                         label="You receive"
                                         variant="outlined"
                                         type="number"
-                                        InputProps={{ 
+                                        InputProps={{
                                             style: { borderRadius: '5pt' },
                                             startAdornment: <InputAdornment position="start"><Typography color='black'>$</Typography></InputAdornment>
                                         }}
@@ -489,6 +525,7 @@ export default function MainContent({ translation }: { translation: TFunction })
                                             setSendValue("0");
                                             setReceiveValue("0");
                                         }}
+                                        value={receiveCurrency}
                                     >
                                         {currenciesOptions.map((option) => (
                                             <MenuItem disabled={option.currency === sendCurrency || option.currency === receiveCurrency} key={`receive-option-${option.id}`} value={option.currency}>
