@@ -2,7 +2,9 @@ import React from 'react';
 import MediaQuery from 'react-responsive';
 import { TFunction } from 'i18next';
 import { useState, useEffect } from 'react';
-import { Box, Button, Grid, Typography, Card, TextField } from '@mui/material';
+import { Box, Button, Grid, Typography, Card, TextField, InputAdornment, MenuItem, Icon } from '@mui/material';
+
+import { US, MX, CO } from 'country-flag-icons/react/3x2'
 
 const serviceOptions = ['logistics', 'ecommerce', 'exports', 'imports', 'fintech'];
 const countriesOptions = [
@@ -10,6 +12,11 @@ const countriesOptions = [
     { value: 'Mexico', label: 'MXN' },
     { value: 'Colombia', label: 'COP' },
 ];
+const currenciesOptions = [
+    { id: 'USD', icon: US, currency: 'USD' },
+    { id: 'MXN', icon: MX, currency: 'MXN' },
+    { id: 'COP', icon: CO, currency: 'COP' },
+]
 
 interface ExchangeRates {
     USD: undefined | number;
@@ -47,9 +54,9 @@ export default function MainContent({ translation }: { translation: TFunction })
         });
     };
 
-    useEffect(() => {
-        getRates();
-    }, []);
+    // useEffect(() => {
+    //     getRates();
+    // }, []);
 
     const timeoutRoutine: TimerHandler = () => {
         if (serviceItem === serviceOptions.length - 1) {
@@ -132,7 +139,10 @@ export default function MainContent({ translation }: { translation: TFunction })
                                             label="You send"
                                             variant="outlined"
                                             type="number"
-                                            InputProps={{ style: { borderRadius: '5pt' } }}
+                                            InputProps={{ 
+                                                style: { borderRadius: '5pt' },
+                                                startAdornment: <InputAdornment position="start"><Typography color='black'>$</Typography></InputAdornment>
+                                            }}
                                             InputLabelProps={{ shrink: false }}
                                             sx={{
                                                 '& .MuiOutlinedInput-root': {
@@ -163,11 +173,13 @@ export default function MainContent({ translation }: { translation: TFunction })
                                             id="you-send-currency"
                                             select
                                             label="Currency"
-                                            defaultValue={countriesOptions[0].label}
+                                            defaultValue={currenciesOptions[0].currency}
                                             SelectProps={{
-                                                native: true,
+                                                native: false,
                                             }}
-                                            InputProps={{ style: { borderRadius: '5pt' } }}
+                                            InputProps={{
+                                                style: { borderRadius: '5pt' },
+                                            }}
                                             InputLabelProps={{ shrink: false }}
                                             sx={{
                                                 marginLeft: '1em',
@@ -175,7 +187,7 @@ export default function MainContent({ translation }: { translation: TFunction })
                                                     backgroundColor: 'white'
                                                 },
                                                 "& .MuiInputLabel-root": { display: "none" },
-                                                width: '6em'
+                                                width: '7.5em'
                                             }}
                                             onChange={(e) => {
                                                 setSendCurrency(e.target.value);
@@ -183,10 +195,15 @@ export default function MainContent({ translation }: { translation: TFunction })
                                                 setReceiveValue("0");
                                             }}
                                         >
-                                            {countriesOptions.filter(option => option.label !== receiveCurrency).map((option) => (
-                                                <option key={option.label} value={option.label}>
-                                                    {option.label}
-                                                </option>
+                                            {currenciesOptions.map((option) => (
+                                                <MenuItem disabled={option.currency === sendCurrency || option.currency === receiveCurrency} key={`send-option-${option.id}`} value={option.currency}>
+                                                    <Box>
+                                                        <Grid container direction='row'>
+                                                            <Icon sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginRight: '5pt' }}><option.icon /></Icon>
+                                                            {option.currency}
+                                                        </Grid>
+                                                    </Box>
+                                                </MenuItem>
                                             ))}
                                         </TextField>
                                     </Grid>
@@ -202,7 +219,10 @@ export default function MainContent({ translation }: { translation: TFunction })
                                             label="You receive"
                                             variant="outlined"
                                             type="number"
-                                            InputProps={{ style: { borderRadius: '5pt' } }}
+                                            InputProps={{ 
+                                                style: { borderRadius: '5pt' },
+                                                startAdornment: <InputAdornment position="start"><Typography color='black'>$</Typography></InputAdornment>
+                                            }}
                                             InputLabelProps={{ shrink: false }}
                                             sx={{
                                                 '& .MuiOutlinedInput-root': {
@@ -235,7 +255,7 @@ export default function MainContent({ translation }: { translation: TFunction })
                                             label="Currency"
                                             defaultValue={countriesOptions[1].label}
                                             SelectProps={{
-                                                native: true,
+                                                native: false,
                                             }}
                                             InputProps={{ style: { borderRadius: '5pt' } }}
                                             InputLabelProps={{ shrink: false }}
@@ -245,7 +265,7 @@ export default function MainContent({ translation }: { translation: TFunction })
                                                     backgroundColor: 'white'
                                                 },
                                                 "& .MuiInputLabel-root": { display: "none" },
-                                                width: '6em'
+                                                width: '7.5em'
                                             }}
                                             onChange={(e) => {
                                                 setReceiveCurrency(e.target.value);
@@ -253,10 +273,15 @@ export default function MainContent({ translation }: { translation: TFunction })
                                                 setReceiveValue("0");
                                             }}
                                         >
-                                            {countriesOptions.filter(option => option.label !== sendCurrency).map((option) => (
-                                                <option key={option.label} value={option.label}>
-                                                    {option.label}
-                                                </option>
+                                            {currenciesOptions.map((option) => (
+                                                <MenuItem disabled={option.currency === sendCurrency || option.currency === receiveCurrency} key={`receive-option-${option.id}`} value={option.currency}>
+                                                    <Box>
+                                                        <Grid container direction='row'>
+                                                            <Icon sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginRight: '5pt' }}><option.icon /></Icon>
+                                                            {option.currency}
+                                                        </Grid>
+                                                    </Box>
+                                                </MenuItem>
                                             ))}
                                         </TextField>
                                     </Grid>
@@ -329,14 +354,17 @@ export default function MainContent({ translation }: { translation: TFunction })
                                         label="You send"
                                         variant="outlined"
                                         type="number"
-                                        InputProps={{ style: { borderRadius: '5pt' } }}
+                                        InputProps={{ 
+                                            style: { borderRadius: '5pt' },
+                                            startAdornment: <InputAdornment position="start"><Typography color='black'>$</Typography></InputAdornment>
+                                        }}
                                         InputLabelProps={{ shrink: false }}
                                         sx={{
                                             '& .MuiOutlinedInput-root': {
                                                 backgroundColor: 'white'
                                             },
                                             "& .MuiInputLabel-root": { display: "none" },
-                                            width: '30vw'
+                                            width: '25vw'
                                         }}
                                         onChange={(e) => {
                                             setSendValue(e.target.value);
@@ -364,7 +392,7 @@ export default function MainContent({ translation }: { translation: TFunction })
                                         label="Currency"
                                         defaultValue={countriesOptions[0].label}
                                         SelectProps={{
-                                            native: true,
+                                            native: false,
                                         }}
                                         InputProps={{ style: { borderRadius: '5pt' } }}
                                         InputLabelProps={{ shrink: false }}
@@ -374,7 +402,7 @@ export default function MainContent({ translation }: { translation: TFunction })
                                                 backgroundColor: 'white'
                                             },
                                             "& .MuiInputLabel-root": { display: "none" },
-                                            width: '25vw'
+                                            width: '30vw'
                                         }}
                                         onChange={(e) => {
                                             setSendCurrency(e.target.value);
@@ -382,10 +410,15 @@ export default function MainContent({ translation }: { translation: TFunction })
                                             setReceiveValue("0");
                                         }}
                                     >
-                                        {countriesOptions.filter(option => option.label !== receiveCurrency).map((option) => (
-                                            <option key={option.label} value={option.label}>
-                                                {option.label}
-                                            </option>
+                                        {currenciesOptions.map((option) => (
+                                            <MenuItem disabled={option.currency === sendCurrency || option.currency === receiveCurrency} key={`send-option-${option.id}`} value={option.currency}>
+                                                <Box>
+                                                    <Grid container direction='row'>
+                                                        <Icon sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginRight: '5pt' }}><option.icon /></Icon>
+                                                        {option.currency}
+                                                    </Grid>
+                                                </Box>
+                                            </MenuItem>
                                         ))}
                                     </TextField>
                                 </Grid>
@@ -397,17 +430,21 @@ export default function MainContent({ translation }: { translation: TFunction })
                                 <Grid item>
                                     <TextField
                                         id="outlined-basic"
+                                        size='small'
                                         label="You receive"
                                         variant="outlined"
                                         type="number"
-                                        InputProps={{ style: { borderRadius: '5pt' } }}
+                                        InputProps={{ 
+                                            style: { borderRadius: '5pt' },
+                                            startAdornment: <InputAdornment position="start"><Typography color='black'>$</Typography></InputAdornment>
+                                        }}
                                         InputLabelProps={{ shrink: false }}
                                         sx={{
                                             '& .MuiOutlinedInput-root': {
                                                 backgroundColor: 'white'
                                             },
                                             "& .MuiInputLabel-root": { display: "none" },
-                                            width: '30vw'
+                                            width: '25vw'
                                         }}
                                         onChange={(e) => {
                                             setReceiveValue(e.target.value);
@@ -430,11 +467,12 @@ export default function MainContent({ translation }: { translation: TFunction })
                                     />
                                     <TextField
                                         id="you-receive-currency"
+                                        size='small'
                                         select
                                         label="Currency"
                                         defaultValue={countriesOptions[1].label}
                                         SelectProps={{
-                                            native: true,
+                                            native: false,
                                         }}
                                         InputProps={{ style: { borderRadius: '5pt' } }}
                                         InputLabelProps={{ shrink: false }}
@@ -444,7 +482,7 @@ export default function MainContent({ translation }: { translation: TFunction })
                                                 backgroundColor: 'white'
                                             },
                                             "& .MuiInputLabel-root": { display: "none" },
-                                            width: '25vw'
+                                            width: '30vw'
                                         }}
                                         onChange={(e) => {
                                             setReceiveCurrency(e.target.value);
@@ -452,10 +490,15 @@ export default function MainContent({ translation }: { translation: TFunction })
                                             setReceiveValue("0");
                                         }}
                                     >
-                                        {countriesOptions.filter(option => option.label !== sendCurrency).map((option) => (
-                                            <option key={option.label} value={option.label}>
-                                                {option.label}
-                                            </option>
+                                        {currenciesOptions.map((option) => (
+                                            <MenuItem disabled={option.currency === sendCurrency || option.currency === receiveCurrency} key={`receive-option-${option.id}`} value={option.currency}>
+                                                <Box>
+                                                    <Grid container direction='row'>
+                                                        <Icon sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginRight: '5pt' }}><option.icon /></Icon>
+                                                        {option.currency}
+                                                    </Grid>
+                                                </Box>
+                                            </MenuItem>
                                         ))}
                                     </TextField>
                                 </Grid>
