@@ -9,8 +9,8 @@ import { CO, MX, US } from 'country-flag-icons/react/3x2';
 export default function ConversionBar({ translation }: { translation: TFunction }) {
     return <>
         <MediaQuery minWidth={1224}>
-            <Toolbar sx={{ bgcolor: '#022f8e', color: 'white' }}>
-                <Grid container direction="row" justifyContent="center" alignItems="center" padding={1}>
+            <Toolbar variant='dense' sx={{ bgcolor: 'primary.main', color: 'white' }}>
+                <Grid container direction="row" justifyContent="center" alignItems="center">
                     <Grid item marginX={3}>
                         <IconButton
                             color="inherit"
@@ -78,7 +78,7 @@ export default function ConversionBar({ translation }: { translation: TFunction 
             </Toolbar>
         </MediaQuery>
         <MediaQuery maxWidth={1224}>
-            <Toolbar sx={{ bgcolor: '#022f8e', color: 'white', alignItems: 'center', justifyContent: 'center' }}>
+            <Toolbar variant='dense' sx={{ bgcolor: 'primary.main', color: 'white', alignItems: 'center', justifyContent: 'center' }}>
                 <Stack direction="column" sx={{ alignItems: 'center', justifyContent: 'center' }}>
                     <Grid container direction="row"  paddingTop={1} paddingBottom={0.5} sx={{ alignItems: 'center', justifyContent: 'center' }}>
                         <Grid item marginLeft={1}>

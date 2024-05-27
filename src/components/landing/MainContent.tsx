@@ -2,7 +2,7 @@ import React from 'react';
 import MediaQuery from 'react-responsive';
 import { TFunction } from 'i18next';
 import { useState, useEffect } from 'react';
-import { Box, Button, Grid, Typography, Card, TextField, InputAdornment, MenuItem, Icon, IconButton } from '@mui/material';
+import { Avatar, Box, Button, Grid, Typography, Card, TextField, InputAdornment, MenuItem, Icon, IconButton } from '@mui/material';
 
 import SwapVertIcon from '@mui/icons-material/SwapVert';
 import { US, MX, CO } from 'country-flag-icons/react/3x2'
@@ -92,12 +92,12 @@ export default function MainContent({ translation }: { translation: TFunction })
         <MediaQuery minWidth={1224}>
             <Box paddingTop="15vh">
                 <Grid container direction="row" justifyContent="center" alignItems="center" height="100%">
-                    <Grid item xs={3} marginX={4}>
-                        <Typography variant="h4" color="white" fontWeight="900">
+                    <Grid item xs={4} marginX={4}>
+                        <Typography variant="h4" color="white" fontWeight="800">
                             {translation("mainTitle")}
                         </Typography>
 
-                        <Typography variant="h4" color="#022f8e" fontWeight="900" marginTop={4}>
+                        <Typography variant="h4" color="primary" fontWeight="900" marginTop={4}>
                             {translation(serviceOptions[serviceItem])}
                         </Typography>
 
@@ -113,9 +113,9 @@ export default function MainContent({ translation }: { translation: TFunction })
                                         borderRadius: '20px',
                                         '&:hover': {
                                             boxShadow: 'none',
-                                            bgcolor: '#003761'
+                                            bgcolor: '#f99c46'
                                         },
-                                        bgcolor: '#022f8e'
+                                        bgcolor: '#f99c46'
                                     }}>
                                     {translation("openAccount")}
                                 </Button>
@@ -126,11 +126,11 @@ export default function MainContent({ translation }: { translation: TFunction })
                                     borderRadius: '20px',
                                     '&:hover': {
                                         boxShadow: 'none',
-                                        borderColor: '#003761',
-                                        color: '#003761',
+                                        borderColor: 'white',
+                                        color: 'white',
                                     },
-                                    borderColor: '#022f8e',
-                                    color: '#022f8e',
+                                    borderColor: 'white',
+                                    color: 'white',
                                 }}>
                                     {translation("scheduleDemo")}
                                 </Button>
@@ -139,7 +139,7 @@ export default function MainContent({ translation }: { translation: TFunction })
                     </Grid>
 
                     <Grid item marginX={4}>
-                        <Card elevation={5} sx={{ backgroundColor: '#022f8e', paddingX: '30pt', paddingTop: '30pt', paddingBottom: '35pt', borderRadius: '10pt' }}>
+                        <Card elevation={5} sx={{ background: 'radial-gradient(100% 111.48% at 100% 100%, rgb(1, 20, 58) 0%, rgb(1, 29, 85) 100%)', boxShadow: 'rgba(255, 255, 255, 0.8) 9px 9px 18px -2px, rgba(255, 255, 255, 0.9) -3px -3px 7px -3px', paddingX: '30pt', paddingTop: '30pt', paddingBottom: '35pt', borderRadius: '25pt' }}>
                             <Grid container direction="column" justifyContent="center" alignItems="center">
                                 <Grid>
                                     <Grid item paddingBottom={1}>
@@ -152,7 +152,7 @@ export default function MainContent({ translation }: { translation: TFunction })
                                             variant="outlined"
                                             type="number"
                                             InputProps={{
-                                                style: { borderRadius: '5pt' },
+                                                style: { borderRadius: '25pt' },
                                                 startAdornment: <InputAdornment position="start"><Typography color='black'>$</Typography></InputAdornment>
                                             }}
                                             InputLabelProps={{ shrink: false }}
@@ -186,19 +186,19 @@ export default function MainContent({ translation }: { translation: TFunction })
                                             select
                                             label="Currency"
                                             defaultValue={currenciesOptions[0].currency}
-                                            SelectProps={{
-                                                native: false,
-                                            }}
-                                            InputProps={{
-                                                style: { borderRadius: '5pt' },
-                                            }}
+                                            SelectProps={{ native: false }}
+                                            InputProps={{ style: { borderRadius: '5pt', color: 'white' } }}
                                             InputLabelProps={{ shrink: false }}
                                             sx={{
                                                 marginLeft: '1em',
                                                 '& .MuiOutlinedInput-root': {
-                                                    backgroundColor: 'white'
+                                                    backgroundColor: 'transparent',
+                                                    '& fieldset': { borderColor: 'transparent' },
+                                                    '&:hover fieldset': { borderColor: 'transparent' },
+                                                    '&.Mui-focused fieldset': { borderColor: 'transparent' },
                                                 },
                                                 "& .MuiInputLabel-root": { display: "none" },
+                                                '& .MuiSvgIcon-root': { color: 'white' },
                                                 width: '7.5em'
                                             }}
                                             onChange={(e) => {
@@ -221,16 +221,12 @@ export default function MainContent({ translation }: { translation: TFunction })
                                         </TextField>
                                     </Grid>
                                 </Grid>
-                                <Grid container direction='row' marginTop={1} marginBottom={2} justifyContent='center'>
-                                    <Button variant="contained" startIcon={<SwapVertIcon />} color='primary' onClick={swapCurrencies} sx={{
-                                        boxShadow: 'none',
-                                        borderRadius: '20px',
-                                        '&:hover': {
-                                            boxShadow: 'none',
-                                        }
-                                    }}>
-                                        {translation('swap')}
-                                    </Button>
+                                <Grid container direction='row' marginBottom={1} justifyContent='end'>
+                                    <IconButton onClick={swapCurrencies}>
+                                        <Avatar sx={{ backgroundColor: 'primary.main' }}>
+                                            <SwapVertIcon />
+                                        </Avatar>
+                                    </IconButton>
                                 </Grid>
                                 <Grid>
                                     <Grid item paddingBottom={1}>
@@ -243,7 +239,7 @@ export default function MainContent({ translation }: { translation: TFunction })
                                             variant="outlined"
                                             type="number"
                                             InputProps={{
-                                                style: { borderRadius: '5pt' },
+                                                style: { borderRadius: '25pt' },
                                                 startAdornment: <InputAdornment position="start"><Typography color='black'>$</Typography></InputAdornment>
                                             }}
                                             InputLabelProps={{ shrink: false }}
@@ -277,17 +273,19 @@ export default function MainContent({ translation }: { translation: TFunction })
                                             select
                                             label="Currency"
                                             defaultValue={countriesOptions[1].label}
-                                            SelectProps={{
-                                                native: false,
-                                            }}
-                                            InputProps={{ style: { borderRadius: '5pt' } }}
+                                            SelectProps={{ native: false }}
+                                            InputProps={{ style: { borderRadius: '5pt', color: 'white' } }}
                                             InputLabelProps={{ shrink: false }}
                                             sx={{
                                                 marginLeft: '1em',
                                                 '& .MuiOutlinedInput-root': {
-                                                    backgroundColor: 'white'
+                                                    backgroundColor: 'transparent',
+                                                    '& fieldset': { borderColor: 'transparent' },
+                                                    '&:hover fieldset': { borderColor: 'transparent' },
+                                                    '&.Mui-focused fieldset': { borderColor: 'transparent' },
                                                 },
                                                 "& .MuiInputLabel-root": { display: "none" },
+                                                '& .MuiSvgIcon-root': { color: 'white' },
                                                 width: '7.5em'
                                             }}
                                             onChange={(e) => {
@@ -319,11 +317,11 @@ export default function MainContent({ translation }: { translation: TFunction })
         <MediaQuery maxWidth={1224}>
             <Box paddingTop="10vh" paddingX='10vw' sx={{ justifyContent: 'center', alignItems: 'center' }}>
                 <Grid item>
-                    <Typography variant="h4" color="white" fontWeight="900">
+                    <Typography variant="h4" color="white" fontWeight="700">
                         {translation("mainTitle")}
                     </Typography>
 
-                    <Typography variant="h4" color="#022f8e" fontWeight="900" marginTop={4}>
+                    <Typography variant="h4" color="primary" fontWeight="900" marginTop={4}>
                         {translation(serviceOptions[serviceItem])}
                     </Typography>
 
@@ -340,9 +338,9 @@ export default function MainContent({ translation }: { translation: TFunction })
                                 borderRadius: '20px',
                                 '&:hover': {
                                     boxShadow: 'none',
-                                    bgcolor: '#003761'
+                                    bgcolor: '#f99c46'
                                 },
-                                bgcolor: '#022f8e'
+                                bgcolor: '#f99c46',
                             }}>
                             {translation("openAccount")}
                         </Button>
@@ -353,11 +351,11 @@ export default function MainContent({ translation }: { translation: TFunction })
                             borderRadius: '20px',
                             '&:hover': {
                                 boxShadow: 'none',
-                                borderColor: '#003761',
-                                color: '#003761',
+                                borderColor: 'white',
+                                color: 'white',
                             },
-                            borderColor: '#022f8e',
-                            color: '#022f8e',
+                            borderColor: 'white',
+                            color: 'white',
                         }}>
                             {translation("scheduleDemo")}
                         </Button>
@@ -365,7 +363,7 @@ export default function MainContent({ translation }: { translation: TFunction })
                 </Grid>
 
                 <Grid item marginTop={5}>
-                    <Card elevation={5} sx={{ backgroundColor: '#022f8e', paddingX: '30pt', paddingTop: '30pt', paddingBottom: '35pt', borderRadius: '10pt' }}>
+                    <Card elevation={5} sx={{ background: 'radial-gradient(100% 111.48% at 100% 100%, rgb(1, 20, 58) 0%, rgb(1, 29, 85) 100%)', boxShadow: 'rgba(255, 255, 255, 0.8) 9px 9px 18px -2px, rgba(255, 255, 255, 0.9) -3px -3px 7px -3px', paddingX: '30pt', paddingTop: '30pt', paddingBottom: '35pt', borderRadius: '25pt' }}>
                         <Grid container direction="column" justifyContent="center" alignItems="center">
                             <Grid>
                                 <Grid item paddingBottom={1}>
@@ -379,7 +377,7 @@ export default function MainContent({ translation }: { translation: TFunction })
                                         variant="outlined"
                                         type="number"
                                         InputProps={{
-                                            style: { borderRadius: '5pt' },
+                                            style: { borderRadius: '25pt' },
                                             startAdornment: <InputAdornment position="start"><Typography color='black'>$</Typography></InputAdornment>
                                         }}
                                         InputLabelProps={{ shrink: false }}
@@ -415,17 +413,19 @@ export default function MainContent({ translation }: { translation: TFunction })
                                         select
                                         label="Currency"
                                         defaultValue={countriesOptions[0].label}
-                                        SelectProps={{
-                                            native: false,
-                                        }}
-                                        InputProps={{ style: { borderRadius: '5pt' } }}
+                                        SelectProps={{ native: false }}
+                                        InputProps={{ style: { borderRadius: '5pt', color: 'white' } }}
                                         InputLabelProps={{ shrink: false }}
                                         sx={{
                                             marginLeft: '1em',
                                             '& .MuiOutlinedInput-root': {
-                                                backgroundColor: 'white'
+                                                backgroundColor: 'transparent',
+                                                '& fieldset': { borderColor: 'transparent' },
+                                                '&:hover fieldset': { borderColor: 'transparent' },
+                                                '&.Mui-focused fieldset': { borderColor: 'transparent' },
                                             },
                                             "& .MuiInputLabel-root": { display: "none" },
+                                            '& .MuiSvgIcon-root': { color: 'white' },
                                             width: '30vw'
                                         }}
                                         onChange={(e) => {
@@ -448,17 +448,13 @@ export default function MainContent({ translation }: { translation: TFunction })
                                     </TextField>
                                 </Grid>
                             </Grid>
-                            <Grid container direction='row' marginTop={1} marginBottom={2} justifyContent='center'>
-                                    <Button size='small' variant="contained" startIcon={<SwapVertIcon />} color='primary' onClick={swapCurrencies} sx={{
-                                        boxShadow: 'none',
-                                        borderRadius: '20px',
-                                        '&:hover': {
-                                            boxShadow: 'none',
-                                        }
-                                    }}>
-                                        {translation('swap')}
-                                    </Button>
-                                </Grid>
+                            <Grid container direction='row' marginBottom={1} justifyContent='end'>
+                                <IconButton onClick={swapCurrencies}>
+                                    <Avatar sx={{ backgroundColor: 'primary.main' }}>
+                                        <SwapVertIcon />
+                                    </Avatar>
+                                </IconButton>
+                            </Grid>
                             <Grid>
                                 <Grid item paddingBottom={1}>
                                     <Typography variant='body2' color='white'>{translation("youReceive")}</Typography>
@@ -471,7 +467,7 @@ export default function MainContent({ translation }: { translation: TFunction })
                                         variant="outlined"
                                         type="number"
                                         InputProps={{
-                                            style: { borderRadius: '5pt' },
+                                            style: { borderRadius: '25pt' },
                                             startAdornment: <InputAdornment position="start"><Typography color='black'>$</Typography></InputAdornment>
                                         }}
                                         InputLabelProps={{ shrink: false }}
@@ -507,17 +503,19 @@ export default function MainContent({ translation }: { translation: TFunction })
                                         select
                                         label="Currency"
                                         defaultValue={countriesOptions[1].label}
-                                        SelectProps={{
-                                            native: false,
-                                        }}
-                                        InputProps={{ style: { borderRadius: '5pt' } }}
+                                        SelectProps={{ native: false }}
+                                        InputProps={{ style: { borderRadius: '5pt', color: 'white' } }}
                                         InputLabelProps={{ shrink: false }}
                                         sx={{
                                             marginLeft: '1em',
                                             '& .MuiOutlinedInput-root': {
-                                                backgroundColor: 'white'
+                                                backgroundColor: 'transparent',
+                                                '& fieldset': { borderColor: 'transparent' },
+                                                '&:hover fieldset': { borderColor: 'transparent' },
+                                                '&.Mui-focused fieldset': { borderColor: 'transparent' },
                                             },
                                             "& .MuiInputLabel-root": { display: "none" },
+                                            '& .MuiSvgIcon-root': { color: 'white' },
                                             width: '30vw'
                                         }}
                                         onChange={(e) => {
